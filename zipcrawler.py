@@ -42,6 +42,9 @@ class ZipCrawler:
             print("{} skipping {}{} -- smaller than threshold".format(
                 datetime.now(), self.directory, filename))
             self.uncompressed_files.append(filename)
+        elif filename.split('.')[-1] in INCOMPRESSIBLE_FILES:
+            print("{} skipping {}{} -- file is already highly compressed".format(
+                datetime.now(), self.directory, filename))
         else:
             with open('{}{}'.format(self.directory, filename), 'rb') as input_file:
                 with gzip.open('{}{}.gz'.format(self.directory, filename), 'wb') as output_file:
@@ -80,7 +83,6 @@ class ZipCrawler:
         from_email = Email('peter@panatale.com')
         to_email = Email(self.email)
         subject = "AppNexus Crawler Compression Results"
-        # TODO: Update content
         content = "These files were compressed:\n"
         for filename in self.compressed_files:
             content += '{}\n'.format(filename)
@@ -106,11 +108,11 @@ if __name__ == "__main__":
     email_regex = '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$'
 
     if len(findall(email_regex, args.email)) != 3:
-        # raise an error here
+        # TODO: raise an error here
         pass
 
     if not os.path.isdir(args.directory):
-        # raise error here
+        # TODO: raise error here
         pass
 
     ZipCrawler(args.directory, args.threshold, args.email, args.dry_run).run()
