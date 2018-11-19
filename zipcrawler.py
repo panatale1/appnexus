@@ -8,7 +8,7 @@ import sendgrid
 from sendgrid.helpers.mail import *
 from shutil import copyfileobj
 
-INCOMPRESSIBLE_FILES = ['jpg', 'pdf', 'wma', 'mp3', 'avi', 'mp4', 'gz', 'zip']
+INCOMPRESSIBLE_FILES = ['jpg', 'pdf', 'wma', 'mp3', 'avi', 'mp4', 'gz', 'zip', 'iso']
 
 
 class ZipCrawler:
